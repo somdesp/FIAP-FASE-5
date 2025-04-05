@@ -1,5 +1,5 @@
 ﻿using FIAP.TECH.CORE.APPLICATION.Services.Contacts;
-using FIAP.TECH.CORE.APPLICATION.Services.Users;
+using FIAP.TECH.CORE.APPLICATION.Services.Patients;
 using FIAP.TECH.CORE.DOMAIN.Interfaces.Repositories;
 using FIAP.TECH.INFRASTRUCTURE.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -16,13 +16,13 @@ public static class ConfigureServices
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         // Repositories
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IContactRepository, ContactRepository>();
-        services.AddScoped<IRegionRepository, RegionRepository>();
+        services.AddScoped<IPatientRepository, UserRepository>();
+        services.AddScoped<IDoctorRepository, DoctorRepository>();
+        services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
         // Services
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IContactService, ContactService>();
+        services.AddScoped<IPatientService, PatientService>();
+        services.AddScoped<IScheduleService, ScheduleService>();
 
 
         services.AddControllers().AddJsonOptions(options =>

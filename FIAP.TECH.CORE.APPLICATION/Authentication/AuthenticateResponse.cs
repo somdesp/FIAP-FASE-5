@@ -1,6 +1,4 @@
-﻿using FIAP.TECH.CORE.DOMAIN.Entities;
-
-namespace FIAP.TECH.CORE.APPLICATION.Authentication;
+﻿namespace FIAP.TECH.CORE.APPLICATION.Authentication;
 
 public class AuthenticateResponse
 {
@@ -9,11 +7,10 @@ public class AuthenticateResponse
     public string Email { get; set; }
     public string Token { get; set; }
 
-    public AuthenticateResponse(Patient user, string token)
+    public AuthenticateResponse(int id, string name, string token)
     {
-        Id = user.Id;
-        Name = user.Name;
-        Email = user.Email;
+        Id = id;
+        Name = name;
         Token = token;
     }
 }

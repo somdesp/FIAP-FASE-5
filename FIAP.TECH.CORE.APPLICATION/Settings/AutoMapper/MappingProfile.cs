@@ -10,7 +10,7 @@ public class MappingProfile : Profile
     {
         CreateMap<ContactDto, Contact>().ReverseMap();
         CreateMap<Contact, ContactDetailsDto>();
-        CreateMap<Contact, ContactUpdateDto>()
+        CreateMap<Contact, ScheduleUpdateDto>()
             .ReverseMap()
             .ForAllMembers(x => x.Condition(
                    (src, dest, prop) =>

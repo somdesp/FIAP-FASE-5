@@ -8,42 +8,32 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace FIAP.TECH.CORE.APPLICATION.Services.Users;
+namespace FIAP.TECH.CORE.APPLICATION.Services.Doctors;
 
-public class UserService : IUserService
+public class DoctorService : IDoctorService
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IDoctorRepository _doctorRepository;
+
     private readonly TokenSettings _tokenSettings;
 
-    public UserService(IUserRepository userRepository, IOptions<TokenSettings> tokenSettings)
+    public DoctorService(IDoctorRepository doctorRepository, IOptions<TokenSettings> tokenSettings)
     {
-        _userRepository = userRepository ?? throw new ArgumentNullException(nameof(_userRepository));
+        _doctorRepository = doctorRepository ?? throw new ArgumentNullException(nameof(_doctorRepository));
         _tokenSettings = tokenSettings.Value;
     }
 
     public async Task<AuthenticateResponse> AuthenticateDoctor(AuthenticateRequestDoctor request)
     {
-        var user = await _userRepository.Authenticate(request.CPF, request.Password);
+        var user = await _doctorRepository.Authenticate(request.CRM, request.Password);
 
         if (user is null) return null;
 
         var token = await GenerateJwtToken(user);
 
-        return new AuthenticateResponse(user, token);
+        return new AuthenticateResponse(user.Id, user.Name, token);
     }
 
-    public async Task<AuthenticateResponse?> AuthenticatePatient(AuthenticateRequestPatient request)
-    {
-        var user = await _userRepository.Authenticate(request.CPF, request.Password);
-
-        if (user is null) return null;
-
-        var token = await GenerateJwtToken(user);
-
-        return new AuthenticateResponse(user, token);
-    }
-
-    private async Task<string> GenerateJwtToken(Patient user)
+    private async Task<string> GenerateJwtToken(Doctor user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = await Task.Run(() =>

@@ -4,13 +4,12 @@ using FIAP.TECH.CORE.DOMAIN.Models;
 
 namespace FIAP.TECH.CORE.APPLICATION.Services.Contacts;
 
-public interface IContactService
+public interface IScheduleService
 {
-    Task SendMessageAsync(Contact message);
-    Task Update(ContactUpdateDto contactDTO);
+    Task SendMessageAsync(Schedule message);
+    Task Update(ScheduleUpdateDto contactDTO);
     Task Delete(int id);
     Task<IEnumerable<ContactDto>> GetAll();
     Task<ContactDto> GetById(int id);
-    Task<IEnumerable<ContactDetailsDto>> GetByDdd(string ddd);
-    Task<ContactResponse> SendResponseMessageAsync(ContactByDDD contactByDDD);
+    Task<ScheduleResponse> SendResponseMessageAsync(ContactByDDD contactByDDD);
 }

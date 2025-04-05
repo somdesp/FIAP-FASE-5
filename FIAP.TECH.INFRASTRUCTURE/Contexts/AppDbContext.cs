@@ -12,8 +12,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
-    public DbSet<Patient> Users { get; set; }
-    public DbSet<Contact> Contacts { get; set; }
-    public DbSet<Region> Regions { get; set; }
+    public DbSet<Patient> Patients { get; set; }
+    public DbSet<Doctor> Doctors { get; set; }
+    public DbSet<Schedule> Schedule { get; set; }
 
 }

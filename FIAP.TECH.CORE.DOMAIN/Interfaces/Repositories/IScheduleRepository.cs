@@ -2,6 +2,6 @@
 
 namespace FIAP.TECH.CORE.DOMAIN.Interfaces.Repositories;
 
-public interface IRegionRepository : IRepository<Region>
+public interface IScheduleRepository : IRepository<Schedule>
 {
 }

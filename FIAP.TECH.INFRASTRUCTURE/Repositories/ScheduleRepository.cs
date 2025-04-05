@@ -4,7 +4,7 @@ using FIAP.TECH.INFRASTRUCTURE.Contexts;
 
 namespace FIAP.TECH.INFRASTRUCTURE.Repositories;
 
-public class RegionRepository : Repository<Region>, IRegionRepository
+public class ScheduleRepository : Repository<Schedule>, IScheduleRepository
 {
-    public RegionRepository(AppDbContext appDbContext) : base(appDbContext) { }
+    public ScheduleRepository(AppDbContext appDbContext) : base(appDbContext) { }
 }

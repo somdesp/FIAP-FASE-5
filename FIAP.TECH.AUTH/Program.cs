@@ -1,6 +1,7 @@
 using FIAP.TECH.CORE.APPLICATION.Authentication;
 using FIAP.TECH.CORE.APPLICATION.Configurations;
-using FIAP.TECH.CORE.APPLICATION.Services.Users;
+using FIAP.TECH.CORE.APPLICATION.Services.Doctors;
+using FIAP.TECH.CORE.APPLICATION.Services.Patients;
 using FIAP.TECH.CORE.APPLICATION.Settings.JwtExtensions;
 using FIAP.TECH.CORE.DOMAIN.Interfaces.Repositories;
 using FIAP.TECH.INFRASTRUCTURE.Contexts;
@@ -17,8 +18,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add methods extensions
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IPatientRepository, UserRepository>();
 
 // Add DbContext
 builder.Services.AddDbContextConfiguration(builder.Configuration);
@@ -41,24 +42,24 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docke
 }
 
 
-app.MapPost("/doctor/login", [AllowAnonymous] async ([FromBody] AuthenticateRequestDoctor request, IUserService userService) =>
+app.MapPost("/doctor/login", [AllowAnonymous] async ([FromBody] AuthenticateRequestDoctor request, IDoctorService userService) =>
 {
     var response = await userService.AuthenticateDoctor(request);
 
     if (response is null)
-        return Results.BadRequest(new { message = "Email e/ou senha inválido(s)" });
+        return Results.BadRequest(new { message = "CRM e/ou senha inválido(s)" });
 
     return Results.Ok(response);
 })
 .WithName("login")
 .WithOpenApi();
 
-app.MapPost("/patient/login", [AllowAnonymous] async ([FromBody] AuthenticateRequestPatient request, IUserService userService) =>
+app.MapPost("/patient/login", [AllowAnonymous] async ([FromBody] AuthenticateRequestPatient request, IPatientService userService) =>
 {
     var response = await userService.AuthenticatePatient(request);
 
     if (response is null)
-        return Results.BadRequest(new { message = "Email e/ou senha inválido(s)" });
+        return Results.BadRequest(new { message = "CPF e/ou senha inválido(s)" });
 
     return Results.Ok(response);
 })
