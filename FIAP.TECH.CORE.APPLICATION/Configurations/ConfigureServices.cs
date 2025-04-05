@@ -1,4 +1,5 @@
 ﻿using FIAP.TECH.CORE.APPLICATION.Services.Contacts;
+using FIAP.TECH.CORE.APPLICATION.Services.Doctors;
 using FIAP.TECH.CORE.APPLICATION.Services.Patients;
 using FIAP.TECH.CORE.DOMAIN.Interfaces.Repositories;
 using FIAP.TECH.INFRASTRUCTURE.Repositories;
@@ -16,11 +17,12 @@ public static class ConfigureServices
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         // Repositories
-        services.AddScoped<IPatientRepository, UserRepository>();
+        services.AddScoped<IPatientRepository, PatientRepository>();
         services.AddScoped<IDoctorRepository, DoctorRepository>();
         services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
         // Services
+        services.AddScoped<IDoctorService, DoctorService>();
         services.AddScoped<IPatientService, PatientService>();
         services.AddScoped<IScheduleService, ScheduleService>();
 

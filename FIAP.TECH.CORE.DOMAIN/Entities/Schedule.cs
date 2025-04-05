@@ -4,7 +4,7 @@ public class Schedule : BaseEntity
 {
     public required DateTime Date { get; set; }
     public required bool HaveSchedule { get; set; }
-    public required int IdDoctor { get; set; }
+    public int IdDoctor { get; set; }
     public int? IdPatient { get; set; }
 
 

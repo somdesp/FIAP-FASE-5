@@ -15,5 +15,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Schedule> Schedule { get; set; }
+    public DbSet<Specialty> Specialty { get; set; }
+
 
 }

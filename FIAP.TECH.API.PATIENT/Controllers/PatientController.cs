@@ -37,5 +37,22 @@ namespace FIAP.TECH.API.PATIENT.Controllers
                 return BadRequest($"Error: {ex.Message}");
             }
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] PatientUpdateDto patientDTO)
+        {
+            try
+            {
+                patientDTO.Id = id;
+                var patient = _mapper.Map<Patient>(patientDTO);
+
+                await _patientService.SendMessageAsync(patient);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
     }
 }

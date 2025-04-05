@@ -17,13 +17,13 @@ public class ScheduleService : IScheduleService
     private readonly IPatientRepository _patientRepository;
 
     private readonly IBusControl _busControl;
-    private readonly IRequestClient<ContactByDDD> _requestClient;
+    private readonly IRequestClient<SearchBySpecialty> _requestClient;
 
     public ScheduleService(IMapper mapper,
             IScheduleRepository scheduleRepository,
             IDoctorRepository doctorRepository,
             IBusControl busControl,
-            IRequestClient<ContactByDDD> requestClient,
+            IRequestClient<SearchBySpecialty> requestClient,
             IPatientRepository patientRepository
             )
     {
@@ -89,17 +89,7 @@ public class ScheduleService : IScheduleService
         await _doctorRepository.Delete(contact);
     }
 
-    public async Task<IEnumerable<ContactDto>> GetAll()
-    {
-        return _mapper.Map<IEnumerable<ContactDto>>(await _doctorRepository.GetAll());
-    }
-
-    public async Task<ContactDto> GetById(int id)
-    {
-        return _mapper.Map<ContactDto>(await _doctorRepository.GetById(id));
-    }
-
-    public async Task<ScheduleResponse> SendResponseMessageAsync(ContactByDDD ddd)
+    public async Task<ScheduleResponse> SendResponseMessageAsync(SearchBySpecialty ddd)
     {
         var response = await _requestClient.GetResponse<ScheduleResponse>(ddd);
         return response.Message;

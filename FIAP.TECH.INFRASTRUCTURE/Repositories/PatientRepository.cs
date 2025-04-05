@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FIAP.TECH.INFRASTRUCTURE.Repositories;
 
-public class UserRepository : Repository<Patient>, IPatientRepository
+public class PatientRepository : Repository<Patient>, IPatientRepository
 {
     private readonly AppDbContext _appDbContext;
-    public UserRepository(AppDbContext appDbContext) : base(appDbContext) =>
+    public PatientRepository(AppDbContext appDbContext) : base(appDbContext) =>
             _appDbContext = appDbContext;
 
     public async Task<Patient?> Authenticate(string CPF, string password)

@@ -18,13 +18,13 @@ public class PatientService : IPatientService
     private readonly IPatientRepository _patientRepository;
     private readonly IMapper _mapper;
     private readonly IBusControl _busControl;
-    private readonly IRequestClient<ContactByDDD> _requestClient;
+    private readonly IRequestClient<SearchBySpecialty> _requestClient;
     private readonly TokenSettings _tokenSettings;
 
 
     public PatientService(IPatientRepository patientRepositor,
         IBusControl busControl,
-        IRequestClient<ContactByDDD> requestClient,
+        IRequestClient<SearchBySpecialty> requestClient,
         IOptions<TokenSettings> tokenSettings)
     {
         _patientRepository = patientRepositor ?? throw new ArgumentNullException(nameof(_patientRepository));
@@ -77,4 +77,5 @@ public class PatientService : IPatientService
             throw;
         }
     }
+
 }

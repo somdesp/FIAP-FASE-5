@@ -9,7 +9,5 @@ public interface IScheduleService
     Task SendMessageAsync(Schedule message);
     Task Update(ScheduleUpdateDto contactDTO);
     Task Delete(int id);
-    Task<IEnumerable<ContactDto>> GetAll();
-    Task<ContactDto> GetById(int id);
-    Task<ScheduleResponse> SendResponseMessageAsync(ContactByDDD contactByDDD);
+    Task<ScheduleResponse> SendResponseMessageAsync(SearchBySpecialty contactByDDD);
 }

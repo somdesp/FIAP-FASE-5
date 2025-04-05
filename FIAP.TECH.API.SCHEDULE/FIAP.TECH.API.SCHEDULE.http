@@ -1,0 +1,6 @@
+@FIAP.TECH.API.SCHEDULE_HostAddress = http://localhost:5228
+
+GET {{FIAP.TECH.API.SCHEDULE_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

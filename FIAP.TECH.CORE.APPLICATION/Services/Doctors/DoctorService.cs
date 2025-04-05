@@ -2,6 +2,8 @@
 using FIAP.TECH.CORE.APPLICATION.Settings.JwtExtensions;
 using FIAP.TECH.CORE.DOMAIN.Entities;
 using FIAP.TECH.CORE.DOMAIN.Interfaces.Repositories;
+using FIAP.TECH.CORE.DOMAIN.Models;
+using MassTransit;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,15 +15,20 @@ namespace FIAP.TECH.CORE.APPLICATION.Services.Doctors;
 public class DoctorService : IDoctorService
 {
     private readonly IDoctorRepository _doctorRepository;
-
+    private readonly IBusControl _busControl;
+    private readonly IRequestClient<SearchBySpecialty> _requestClient;
     private readonly TokenSettings _tokenSettings;
 
-    public DoctorService(IDoctorRepository doctorRepository, IOptions<TokenSettings> tokenSettings)
+    public DoctorService(IDoctorRepository doctorRepository,
+                         IOptions<TokenSettings> tokenSettings,
+                         IBusControl busControl,
+                         IRequestClient<SearchBySpecialty> requestClient)
     {
         _doctorRepository = doctorRepository ?? throw new ArgumentNullException(nameof(_doctorRepository));
         _tokenSettings = tokenSettings.Value;
     }
 
+    #region Login
     public async Task<AuthenticateResponse> AuthenticateDoctor(AuthenticateRequestDoctor request)
     {
         var user = await _doctorRepository.Authenticate(request.CRM, request.Password);
@@ -49,5 +56,25 @@ public class DoctorService : IDoctorService
         });
 
         return tokenHandler.WriteToken(token);
+    }
+    #endregion
+
+
+    public async Task SendMessageAsync(Doctor message)
+    {
+        try
+        {
+            await _busControl.Publish(message);
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+    public async Task<SpecialtyResponse> SendResponseMessageAsync(SearchBySpecialty specialty)
+    {
+        var response = await _requestClient.GetResponse<SpecialtyResponse>(specialty);
+        return response.Message;
     }
 }

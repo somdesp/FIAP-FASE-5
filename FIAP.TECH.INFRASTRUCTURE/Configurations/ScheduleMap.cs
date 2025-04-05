@@ -12,9 +12,9 @@ public class ScheduleMap : IEntityTypeConfiguration<Schedule>
 
         builder.Property(x => x.Id).UseIdentityColumn().IsRequired();
         builder.Property(x => x.CreatedDate).HasColumnType("datetime").IsRequired();
-        builder.Property(x => x.Date).HasColumnType("varchar(50)").IsRequired();
-        builder.Property(x => x.IdDoctor).HasColumnType("varchar(50)").IsRequired();
-        builder.Property(x => x.IdPatient).HasColumnType("varchar(16)").IsRequired();
+        builder.Property(x => x.Date).HasColumnType("datetime").IsRequired();
+        builder.Property(x => x.IdDoctor).IsRequired();
+        builder.Property(x => x.IdPatient).IsRequired();
         builder.Property(x => x.HaveSchedule).HasColumnType("bit").IsRequired();
 
 

@@ -3,28 +3,31 @@ using FIAP.TECH.CORE.APPLICATION.Configurations;
 using FIAP.TECH.CORE.APPLICATION.Services.Doctors;
 using FIAP.TECH.CORE.APPLICATION.Services.Patients;
 using FIAP.TECH.CORE.APPLICATION.Settings.JwtExtensions;
-using FIAP.TECH.CORE.DOMAIN.Interfaces.Repositories;
 using FIAP.TECH.INFRASTRUCTURE.Contexts;
-using FIAP.TECH.INFRASTRUCTURE.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 
-
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+// Add Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerConfiguration();
 
 // Add methods extensions
-builder.Services.AddScoped<IPatientService, PatientService>();
-builder.Services.AddScoped<IPatientRepository, UserRepository>();
+builder.Services.AddInjectionApplication(builder.Configuration);
 
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+builder.Services.AddSecurity();
+
+builder.Services.AddMassTransitExtensionWeb(builder.Configuration);
 // Add DbContext
 builder.Services.AddDbContextConfiguration(builder.Configuration);
 
-builder.Services.AddSecurity();
 
 var app = builder.Build();
 
@@ -51,7 +54,7 @@ app.MapPost("/doctor/login", [AllowAnonymous] async ([FromBody] AuthenticateRequ
 
     return Results.Ok(response);
 })
-.WithName("login")
+.WithName("/doctor/login")
 .WithOpenApi();
 
 app.MapPost("/patient/login", [AllowAnonymous] async ([FromBody] AuthenticateRequestPatient request, IPatientService userService) =>
@@ -63,7 +66,7 @@ app.MapPost("/patient/login", [AllowAnonymous] async ([FromBody] AuthenticateReq
 
     return Results.Ok(response);
 })
-.WithName("login")
+.WithName("/patient/login")
 .WithOpenApi();
 
 app.Run();

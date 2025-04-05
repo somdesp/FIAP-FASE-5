@@ -8,9 +8,9 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<ContactDto, Contact>().ReverseMap();
-        CreateMap<Contact, ContactDetailsDto>();
-        CreateMap<Contact, ScheduleUpdateDto>()
+        CreateMap<DoctorDto, Doctor>().ReverseMap();
+        CreateMap<Doctor, PatientDetailsDto>();
+        CreateMap<Doctor, DoctorUpdateDto>()
             .ReverseMap()
             .ForAllMembers(x => x.Condition(
                    (src, dest, prop) =>
@@ -19,6 +19,16 @@ public class MappingProfile : Profile
                        return true;
                    }));
 
-        CreateMap<Region, RegionDetailsDto>();
+        CreateMap<PatientDto, Patient>().ReverseMap();
+        CreateMap<Patient, PatientDetailsDto>();
+        CreateMap<Patient, PatientUpdateDto>()
+            .ReverseMap()
+            .ForAllMembers(x => x.Condition(
+                   (src, dest, prop) =>
+                   {
+                       if (prop == null) return false;
+                       return true;
+                   }));
+
     }
 }
