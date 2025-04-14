@@ -99,13 +99,13 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install dependencies
-      run: dotnet restore ./TESTS/FIAP.TECH.TESTS
+      run: dotnet restore ./FIAP.TECH.TESTS
 
     - name: Build
-      run: dotnet build ./TESTS/FIAP.TECH.TESTS --configuration Release --no-restore
+      run: dotnet build ./FIAP.TECH.TESTS --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test ./TESTS/FIAP.TECH.TESTS --no-restore --verbosity normal
+      run: dotnet test ./FIAP.TECH.TESTS --no-restore --verbosity normal
 
   # deploy_Docker:
   #   name: Deploy the application in Docker
