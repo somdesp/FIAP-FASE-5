@@ -9,4 +9,4 @@ COPY ["bin/Release/net8.0", "app/"]
 
 WORKDIR /app
 EXPOSE 80
-ENTRYPOINT ["dotnet", "FIAP.TECH.DOCTOR.dll"]
+ENTRYPOINT ["dotnet", "FIAP.TECH.API.DOCTOR.dll"]
