@@ -29,17 +29,17 @@ jobs:
     steps:     
       - uses: actions/checkout@v4
 
-      - name: Build API DOCTOR
-        run: dotnet publish ./FIAP.TECH.API.DOCTOR --configuration Release
+      # - name: Build API DOCTOR
+      #   run: dotnet publish ./FIAP.TECH.API.DOCTOR --configuration Release
 
-      - name: Build API PATIENT
-        run: dotnet publish ./FIAP.TECH.API.PATIENT --configuration Release
+      # - name: Build API PATIENT
+      #   run: dotnet publish ./FIAP.TECH.API.PATIENT --configuration Release
 
-      - name: Build SCHEDULE
-        run: dotnet publish ./FIAP.TECH.API.SCHEDULE --configuration Release
+      # - name: Build SCHEDULE
+      #   run: dotnet publish ./FIAP.TECH.API.SCHEDULE --configuration Release
 
-      - name: Build AUTH
-        run: dotnet publish ./FIAP.TECH.AUTH --configuration Release
+      # - name: Build AUTH
+      #   run: dotnet publish ./FIAP.TECH.AUTH --configuration Release
 
       - name: Build WORK Service
         run: dotnet publish ./FIAP.TECH.WORK --configuration Release
@@ -52,39 +52,39 @@ jobs:
           # Password or personal access token used to log against the Docker registry
           password: ${{secrets.DOCKERHUB}}   
 
-      - name: Push Docker images (API DOCTOR)
-        uses: docker/build-push-action@v6.9.0
-        with:
-          context: ./FIAP.TECH.API.DOCTOR
-          tags: 'somdesp/fiap5:api_doctor_latest'
-          push: true
+      # - name: Push Docker images (API DOCTOR)
+      #   uses: docker/build-push-action@v6.9.0
+      #   with:
+      #     context: ./FIAP.TECH.API.DOCTOR
+      #     tags: 'somdesp/fiap5:api_doctor_latest'
+      #     push: true
 
-      - name: Push Docker images (API PATIENT)
-        uses: docker/build-push-action@v6.9.0
-        with:
-          context: ./FIAP.TECH.API.PATIENT
-          tags: 'somdesp/fiap5:api_patient_latest'
-          push: true
+      # - name: Push Docker images (API PATIENT)
+      #   uses: docker/build-push-action@v6.9.0
+      #   with:
+      #     context: ./FIAP.TECH.API.PATIENT
+      #     tags: 'somdesp/fiap5:api_patient_latest'
+      #     push: true
 
-      - name: Push Docker images (API SCHEDULE)
-        uses: docker/build-push-action@v6.9.0
-        with:
-          context: ./FIAP.TECH.API.SCHEDULE
-          tags: 'somdesp/fiap5:api_schedule_latest'
-          push: true
+      # - name: Push Docker images (API SCHEDULE)
+      #   uses: docker/build-push-action@v6.9.0
+      #   with:
+      #     context: ./FIAP.TECH.API.SCHEDULE
+      #     tags: 'somdesp/fiap5:api_schedule_latest'
+      #     push: true    
           
+      # - name: Push Docker images (AUTH)
+      #   uses: docker/build-push-action@v6.9.0
+      #   with:
+      #     context: ./FIAP.TECH.AUTH/
+      #     tags: 'somdesp/fiap5:auth_latest'
+      #     push: true
+
       - name: Push Docker images (WORK SERVICE)
         uses: docker/build-push-action@v6.9.0
         with:
           context: ./FIAP.TECH.WORK
           tags: 'somdesp/fiap5:work_service_latest'
-          push: true
-          
-      - name: Push Docker images (AUTH)
-        uses: docker/build-push-action@v6.9.0
-        with:
-          context: ./FIAP.TECH.AUTH/
-          tags: 'somdesp/fiap5:auth_latest'
           push: true
 
   test:
